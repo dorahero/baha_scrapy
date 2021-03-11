@@ -1,13 +1,13 @@
 from baha.items import BahaItem
-from baha.util.setting import HEADERS
+from baha.util.setting import *
 from bs4 import BeautifulSoup
 import scrapy
 import time
 import re
 from datetime import datetime
 from baha.utils import ScyllaProxies, MongoProxies
-from baha.util.proxy_list import PROXY_LIST
-import random
+# from baha.util.proxy_list import PROXY_LIST
+# import random
 import requests
 from baha.model.method import parse_reply_content
 
@@ -17,7 +17,7 @@ class BahaSpider(scrapy.Spider):
     headers = HEADERS
     domain = "http://forum.gamer.com.tw/"
     def start_requests(self):        
-        for i in range(5):
+        for i in range(TITLE_PAGE):
             url = f'http://forum.gamer.com.tw/ajax/rank.php?c=21&page={i+1}'
             
             yield scrapy.Request(url=url, callback=self.parse_title)
@@ -39,7 +39,7 @@ class BahaSpider(scrapy.Spider):
             
             item['data'] = res
             yield item
-            for p in range(5):
+            for p in range(ARTICLE_PAGE):
                 # url = f'http://forum.gamer.com.tw/B.php?page={p+1}&bsn={bsn}'
                 url = f'https://m.gamer.com.tw/ajax/MB_B_2k14.php?bsn={bsn}&subbsn=0&ltype=&page={p+1}&keyword='
                 yield scrapy.Request(url=url, cb_kwargs={"title": title, "bsn": bsn}, callback=self.parse_article_title)

@@ -6,25 +6,25 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-import logging
-from logging.handlers import RotatingFileHandler
+# import logging
+# from logging.handlers import RotatingFileHandler
 
-from scrapy.utils.log import configure_logging
+# from scrapy.utils.log import configure_logging
 
-LOG_ENABLED = False
-# Disable default Scrapy log settings.
-configure_logging(install_root_handler=False)
+# LOG_ENABLED = False
+# # Disable default Scrapy log settings.
+# configure_logging(install_root_handler=False)
 
-# Define your logging settings.
-log_file = 'log/CRAWLER_logs.log'
+# # Define your logging settings.
+# log_file = 'log/CRAWLER_logs.log'
 
-root_logger = logging.getLogger()
-root_logger.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-rotating_file_log = RotatingFileHandler(log_file, maxBytes=10485760, backupCount=1)
-rotating_file_log.setLevel(logging.ERROR)
-rotating_file_log.setFormatter(formatter)
-root_logger.addHandler(rotating_file_log)
+# root_logger = logging.getLogger()
+# root_logger.setLevel(logging.INFO)
+# formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# rotating_file_log = RotatingFileHandler(log_file, maxBytes=10485760, backupCount=1)
+# rotating_file_log.setLevel(logging.ERROR)
+# rotating_file_log.setFormatter(formatter)
+# root_logger.addHandler(rotating_file_log)
 
 BOT_NAME = 'baha'
 
@@ -34,6 +34,7 @@ NEWSPIDER_MODULE = 'baha.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'baha (+http://www.yourdomain.com)'
+USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -74,12 +75,19 @@ CONCURRENT_REQUESTS = 1024
 #    'baha.middlewares.BahaDownloaderMiddleware': 543,
 #}
 from baha.utils import ScyllaProxies, MongoProxies
-PROXY_POOL_ENABLED = True
+# PROXY_POOL_ENABLED = True
 ROTATING_PROXY_LIST = MongoProxies("proxy_checked").get_all_proxies()
 DOWNLOADER_MIDDLEWARES = {
-    'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-    'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+    'rotating_proxies.middlewares.RotatingProxyMiddleware': 800,
+    'rotating_proxies.middlewares.BanDetectionMiddleware': 800,
 }
+# PROXY_POOL_ENABLED = True
+# DOWNLOADER_MIDDLEWARES = {
+#     # ...
+#     'scrapy_proxy_pool.middlewares.ProxyPoolMiddleware': 610,
+#     'scrapy_proxy_pool.middlewares.BanDetectionMiddleware': 620,
+#     # ...
+# }
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
