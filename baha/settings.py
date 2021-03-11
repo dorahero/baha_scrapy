@@ -26,6 +26,8 @@
 # rotating_file_log.setFormatter(formatter)
 # root_logger.addHandler(rotating_file_log)
 
+LOG_LEVEL = 'INFO'
+
 BOT_NAME = 'baha'
 
 SPIDER_MODULES = ['baha.spiders']
