@@ -33,7 +33,7 @@ class BahaSpider(scrapy.Spider):
             _['hot'] = j['hot']
             _['ranking'] = j['ranking']
             bsn = j['bsn']
-            res['_id'] = bsn
+            res['_id'] = j['ranking']
             res['information'] = _
             res["insert_time"] = datetime.strftime(datetime.now(), "%Y-%m-%dT%H:%M:%S")     
             
