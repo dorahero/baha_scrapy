@@ -3,3 +3,4 @@ HEADERS = {
 }      
 TITLE_PAGE = 5
 ARTICLE_PAGE = 5
+REPLY_PAGE = 1

@@ -6,8 +6,6 @@ import time
 import re
 from datetime import datetime
 from baha.utils import ScyllaProxies, MongoProxies
-# from baha.util.proxy_list import PROXY_LIST
-# import random
 import requests
 from baha.model.method import parse_reply_content
 
@@ -68,11 +66,11 @@ class BahaSpider(scrapy.Spider):
                     res["reply_num"] = reply_num
                     res["_id"] = str(snA)+str(bsn)
                     res["bsn"] = str(bsn)
-                    url = f"https://m.gamer.com.tw/forum/C.php?bsn={bsn}&snA={snA}&bpage=1&ltype="
+                    url = f"https://m.gamer.com.tw/forum/C.php?bsn={bsn}&snA={snA}&bpage=1&ltype=&page={REPLY_PAGE}"
                     res["article_url"] = url
                     yield scrapy.Request(url=url, meta={"res": res}, callback=self.parse_article_content)   
             except Exception as e:
-                print(e)
+                pass
 
     def parse_article_content(self, response):
         res = response.meta['res']
@@ -103,7 +101,7 @@ class BahaSpider(scrapy.Spider):
                     _['reply_content_content'] = reply_content_content
                     content.append(_)
             except Exception as e:
-                print(e)
+                pass
         res["content"] = content
         res["insert_time"] = datetime.strftime(datetime.now(), "%Y-%m-%dT%H:%M:%S")     
         item['data'] = res
